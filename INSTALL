@@ -1,0 +1,9 @@
+Building Aevo
+
+See doc/readme-qt.rst for instructions on building Aevo QT,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of Aevo.
+
+See doc/build-*.txt for instructions on building Aevod,
+the intended-for-services, no-graphical-interface, reference
+implementation of Aevo.

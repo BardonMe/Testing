@@ -117,7 +117,19 @@ OBJS= \
     obj/crypto/sha1.o \
     obj/crypto/sha256.o \
     obj/crypto/sha512.o \
-    obj/smessage.o
+    obj/smessage.o \
+    crypto/cubehash.o \
+    crypto/luffa.o \
+    crypto/aes_helper.o \
+    crypto/echo.o \
+    crypto/shavite.o \
+    crypto/simd.o \
+    crypto/blake.o\
+    crypto/bmw.o\
+    crypto/groestl.o\
+    crypto/jh.o\
+    crypto/keccak.o\
+    crypto/skein.o
 ifeq (${USE_WALLET}, 1)
     DEFS += -DENABLE_WALLET
     OBJS += \
@@ -130,7 +142,7 @@ ifeq (${USE_WALLET}, 1)
         obj/walletdb.o
 endif
 
-all: aevod.exe
+all: Aevod.exe
 
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
 DEFS += -I"$(CURDIR)/leveldb/include"
@@ -143,13 +155,13 @@ obj/txdb-leveldb.o: leveldb/libleveldb.a
 obj/%.o: %.cpp $(HEADERS)
 	$(CXX) -c $(CFLAGS) -o $@ $<
 
-aevod.exe: $(OBJS:obj/%=obj/%)
+Aevod.exe: $(OBJS:obj/%=obj/%)
 	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS) -lshlwapi
-	$(STRIP) aevod.exe
+	$(STRIP) Aevod.exe
 
 clean:
 	-rm -f obj/*.o
-	-rm -f aevod.exe
+	-rm -f Aevod.exe
 	-rm -f obj/build.h
 	cd leveldb && TARGET_OS=OS_WINDOWS_CROSSCOMPILE $(MAKE) clean && cd ..
 

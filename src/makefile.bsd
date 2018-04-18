@@ -129,7 +129,19 @@ OBJS= \
     obj/kernel.o \
     obj/pbkdf2.o \
     obj/scrypt.o \
-    obj/chainparams.o
+    crypto/chainparams.o \
+ 	crypto/cubehash.o \
+    crypto/luffa.o \
+    crypto/aes_helper.o \
+    crypto/echo.o \
+    crypto/shavite.o \
+    crypto/simd.o \
+    crypto/blake.o\
+    crypto/bmw.o\
+    crypto/groestl.o\
+    crypto/jh.o\
+    crypto/keccak.o\
+    crypto/skein.o
 
 ifeq (${USE_WALLET}, 1)
     DEFS += -DENABLE_WALLET
@@ -143,7 +155,7 @@ ifeq (${USE_WALLET}, 1)
         obj/walletdb.o
 endif
 
-all: aevod
+all: Aevod
 
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
 DEFS += $(addprefix -I,$(CURDIR)/leveldb/include)
@@ -163,11 +175,11 @@ obj/%.o: %.cpp
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-aevod: $(OBJS:obj/%=obj/%)
+Aevod: $(OBJS:obj/%=obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
 
 clean:
-	-rm -f aevod
+	-rm -f Aevod
 	-rm -f obj/*.o
 	-rm -f obj/*.P
 	-rm -f obj/build.h

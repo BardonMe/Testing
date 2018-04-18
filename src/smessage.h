@@ -166,7 +166,7 @@ public:
 
 
 // -- get at the data
-class CAevoAddress_B : public CAevoAddress
+class CAevocoinAddress_B : public CAevocoinAddress
 {
 public:
     uint8_t getVersion()

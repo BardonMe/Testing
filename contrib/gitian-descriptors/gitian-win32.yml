@@ -1,5 +1,5 @@
 ---
-name: "Aevo"
+name: "Aevo Reborn"
 suites:
 - "lucid"
 architectures:
@@ -12,8 +12,8 @@ packages:
 - "faketime"
 reference_datetime: "2011-01-30 00:00:00"
 remotes:
-- "url": "https://github.com/aevo/aevo.git"
-  "dir": "Aevo"
+- "url": "https://github.com/rat4/Aevo.git"
+  "dir": "Aevo Reborn"
 files:
 - "qt-win32-4.7.4-gitian.zip"
 - "boost-win32-1.47.0-gitian.zip"
@@ -59,10 +59,10 @@ script: |
   export LD_PRELOAD=/usr/lib/faketime/libfaketime.so.1
   export FAKETIME=$REFERENCE_DATETIME
   export TZ=UTC
-  make -f makefile.linux-mingw $MAKEOPTS DEPSDIR=$HOME/build aevod.exe USE_UPNP=1 DEBUGFLAGS="-frandom-seed=Aevo"
-  i586-mingw32msvc-strip aevod.exe
+  make -f makefile.linux-mingw $MAKEOPTS DEPSDIR=$HOME/build Aevod.exe USE_UPNP=1 DEBUGFLAGS="-frandom-seed=Aevo"
+  i586-mingw32msvc-strip Aevod.exe
   mkdir $OUTDIR/daemon
-  cp aevod.exe $OUTDIR/daemon
+  cp Aevod.exe $OUTDIR/daemon
   cd ..
   mkdir nsis
   git archive HEAD | tar -x -C nsis

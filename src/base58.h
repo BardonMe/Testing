@@ -98,17 +98,17 @@ public:
  * Script-hash-addresses have version 5 (or 196 testnet).
  * The data vector contains RIPEMD160(SHA256(cscript)), where cscript is the serialized redemption script.
  */
-class CAevoAddress : public CBase58Data {
+class CAevocoinAddress : public CBase58Data {
 public:
     bool Set(const CKeyID &id);
     bool Set(const CScriptID &id);
     bool Set(const CTxDestination &dest);
     bool IsValid() const;
 
-    CAevoAddress() {}
-    CAevoAddress(const CTxDestination &dest) { Set(dest); }
-    CAevoAddress(const std::string& strAddress) { SetString(strAddress); }
-    CAevoAddress(const char* pszAddress) { SetString(pszAddress); }
+    CAevocoinAddress() {}
+    CAevocoinAddress(const CTxDestination &dest) { Set(dest); }
+    CAevocoinAddress(const std::string& strAddress) { SetString(strAddress); }
+    CAevocoinAddress(const char* pszAddress) { SetString(pszAddress); }
 
     CTxDestination Get() const;
     bool GetKeyID(CKeyID &keyID) const;
@@ -118,7 +118,7 @@ public:
 /**
  * A base58-encoded secret key
  */
-class CAevoSecret : public CBase58Data
+class CAevocoinSecret : public CBase58Data
 {
 public:
     void SetKey(const CKey& vchSecret);
@@ -127,11 +127,11 @@ public:
     bool SetString(const char* pszSecret);
     bool SetString(const std::string& strSecret);
 
-    CAevoSecret(const CKey& vchSecret) { SetKey(vchSecret); }
-    CAevoSecret() {}
+    CAevocoinSecret(const CKey& vchSecret) { SetKey(vchSecret); }
+    CAevocoinSecret() {}
 };
 
-template<typename K, int Size, CChainParams::Base58Type Type> class CAevoExtKeyBase : public CBase58Data
+template<typename K, int Size, CChainParams::Base58Type Type> class CAevocoinExtKeyBase : public CBase58Data
 {
 public:
     void SetKey(const K &key) {
@@ -146,15 +146,15 @@ public:
         return ret;
     }
 
-    CAevoExtKeyBase(const K &key) {
+    CAevocoinExtKeyBase(const K &key) {
         SetKey(key);
     }
 
-    CAevoExtKeyBase() {}
+    CAevocoinExtKeyBase() {}
 };
 
-typedef CAevoExtKeyBase<CExtKey, 74, CChainParams::EXT_SECRET_KEY> CAevoExtKey;
-typedef CAevoExtKeyBase<CExtPubKey, 74, CChainParams::EXT_PUBLIC_KEY> CAevoExtPubKey;
+typedef CAevocoinExtKeyBase<CExtKey, 74, CChainParams::EXT_SECRET_KEY> CAevocoinExtKey;
+typedef CAevocoinExtKeyBase<CExtPubKey, 74, CChainParams::EXT_PUBLIC_KEY> CAevocoinExtPubKey;
 
 /** base58-encoded Bitcoin addresses.
  * Public-key-hash-addresses have version 0 (or 111 testnet).

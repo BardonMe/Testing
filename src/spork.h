@@ -1,4 +1,4 @@
-// Copyright (c) 2015 The AEVO developers
+// Copyright (c) 2015 The AVO developers
 // Copyright (c) 2009-2012 The Darkcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -37,7 +37,7 @@ using namespace boost;
 #define SPORK_2_INSTANTX_DEFAULT                              978307200   //2001-1-1 23:59:59 GMT
 #define SPORK_3_INSTANTX_BLOCK_FILTERING_DEFAULT              978307200   //2001-1-1 23:59:59 GMT
 #define SPORK_4_RECONVERGE_DEFAULT                            1451606400  //2016-01-01 // NOT USED
-#define SPORK_5_MAX_VALUE_DEFAULT                             500         //500 AEVO 
+#define SPORK_5_MAX_VALUE_DEFAULT                             4500         //4500 AVO 
 #define SPORK_6_REPLAY_BLOCKS_DEFAULT                         0 		  // NOT USED
 #define SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT_DEFAULT        4070908800   //OFF
 #define SPORK_9_MASTERNODE_BUDGET_ENFORCEMENT_DEFAULT         4070908800   //OFF
@@ -113,8 +113,8 @@ private:
 public:
 
     CSporkManager() {
-        strMainPubKey = "04707c5d5a40205865eca68788e4f299e7aee74c55cc3e94852900289b75d1efae82da895c371134643959d90582012daa6397cf8873944fcaa56fbe1b374f58a2";
-        strTestPubKey = "048d8c71a0b56bd75b1c90f6513730d7578a786868bdce589cecb3fe2a8bddd763df5a74317c1c56bec1152d6735ac9bf793980f8c3bd164add3de0de332a2e4c6";
+        strMainPubKey = "04a983220ea7a38a7106385003fef77896538a382a0dcc389cc45f3c98751d9af423a097789757556259351198a8aaa628a1fd644c3232678c5845384c744ff8d7";
+        strTestPubKey = "04a983220ea7a38a7106385003fef77896538a382a0dcc389cc45f3c98751d9af423a097789757556259351198a8aaa628a1fd644c3232678c5845384c744ff8d7";
     }
 
     std::string GetSporkNameByID(int id);

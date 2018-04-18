@@ -81,4 +81,4 @@ Aevo
 DOS prompt:
 cd \Aevo\src
 mingw32-make -f makefile.mingw
-strip aevod.exe
+strip Aevod.exe

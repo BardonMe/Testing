@@ -12,23 +12,20 @@
 #include "net.h"
 #include "script.h"
 #include "scrypt.h"
+#include "hashblock.h"
 
 #include <list>
 
 class CValidationState;
 
-#define START_MASTERNODE_PAYMENTS_TESTNET 1428034047 //Fri, 09 Jan 2015 21:05:58 GMT
-#define START_MASTERNODE_PAYMENTS 1516291263 //GMT: Thursday, 18 de January de 2018 16:01:03
+#define START_MASTERNODE_PAYMENTS_TESTNET 1522332000 //Thursday, March 29, 2018 2:00:00 PM GMT
+#define START_MASTERNODE_PAYMENTS 1522332000 //Thursday, March 29, 2018 2:00:00 PM GMT
 
 static const int64_t DARKSEND_COLLATERAL = (50*COIN);
 static const int64_t DARKSEND_POOL_MAX = (4999.99*COIN);
 
-static const int64_t STATIC_POS_REWARD = 3 * COIN; //Constant reward of 3.5 AEVO per COIN
+static const int64_t STATIC_POS_REWARD = 3 * COIN; //Constant reward of 40 AVO
 static const int64_t TARGET_SPACING = 2 * 60; // 2 min per Block
-static const int64_t TARGET_SPACING2 = 2 * 60; // 2 min per Block
-static const int64_t STAKE_TIMESPAN_SWITCH_TIME = 1508858115;
-static const int64_t STAKE_TIMESPAN_SWITCH_TIME1 = 1509555600; //1 Nov 2017 17:00:00 GMT
-static const int64_t FORK_TIME = 1510059600;  //November 7, 2017 1:00:00 PM GMT
 
 
 #define INSTANTX_SIGNATURES_REQUIRED           10
@@ -62,7 +59,7 @@ static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 /** Default for -maxorphanblocks, maximum number of orphan blocks kept in memory */
 static const unsigned int DEFAULT_MAX_ORPHAN_BLOCKS = 750;
 /** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) */
-static const int64_t MIN_TX_FEE = 1000000;
+static const int64_t MIN_TX_FEE = 100000;
 /** Fees smaller than this (in satoshi) are considered zero fee (for relaying) */
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
 /** No amount larger than this (in satoshi) is valid */
@@ -77,7 +74,7 @@ inline int64_t FutureDrift(int64_t nTime) { return nTime + DRIFT; }
 /** "reject" message codes **/
 static const unsigned char REJECT_INVALID = 0x10;
 
-inline int64_t GetMNCollateral(int nHeight) { return 42500; }
+inline int64_t GetMNCollateral(int nHeight) { return 5000; }
 
 extern CScript COINBASE_FLAGS;
 extern CCriticalSection cs_main;
@@ -709,7 +706,12 @@ public:
 
     uint256 GetPoWHash() const
     {
-        return scrypt_blockhash(CVOIDBEGIN(nVersion));
+		if (nTime < 1522317600) {
+			return scrypt_blockhash(CVOIDBEGIN(nVersion));
+		}
+		else {
+			return Hash9(BEGIN(nVersion), END(nNonce));
+		}
     }
 
     int64_t GetBlockTime() const
@@ -1116,11 +1118,11 @@ public:
         return strprintf("CBlockIndex(nprev=%p, pnext=%p, nFile=%u, nBlockPos=%-6d nHeight=%d, nMint=%s, nMoneySupply=%s, nFlags=(%s)(%d)(%s), nStakeModifier=%016x, hashProof=%s, prevoutStake=(%s), nStakeTime=%d merkle=%s, hashBlock=%s)",
 #else
         return strprintf("CBlockIndex(nprev=%p, pnext=%p, nFile=%u, nBlockPos=%-6d nHeight=%d, nFlags=(%s)(%d)(%s), nStakeModifier=%016x, hashProof=%s, prevoutStake=(%s), nStakeTime=%d merkle=%s, hashBlock=%s)",
-#endif
+#endif        
             pprev, pnext, nFile, nBlockPos, nHeight,
 #ifndef LOWMEM
             FormatMoney(nMint), FormatMoney(nMoneySupply),
-#endif
+#endif           
             GeneratedStakeModifier() ? "MOD" : "-", GetStakeEntropyBit(), IsProofOfStake()? "PoS" : "PoW",
             nStakeModifier,
             hashProof.ToString(),

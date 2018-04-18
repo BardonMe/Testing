@@ -189,7 +189,7 @@ std::string HelpMessage()
     string strUsage = _("Options:") + "\n";
     strUsage += "  -?                     " + _("This help message") + "\n";
     strUsage += "  -conf=<file>           " + _("Specify configuration file (default: Aevo.conf)") + "\n";
-    strUsage += "  -pid=<file>            " + _("Specify pid file (default: aevod.pid)") + "\n";
+    strUsage += "  -pid=<file>            " + _("Specify pid file (default: Aevod.pid)") + "\n";
     strUsage += "  -datadir=<dir>         " + _("Specify data directory") + "\n";
     strUsage += "  -wallet=<dir>          " + _("Specify wallet file (within data directory)") + "\n";
     strUsage += "  -dbcache=<n>           " + _("Set database cache size in megabytes (default: 10)") + "\n";
@@ -292,7 +292,7 @@ strUsage += "\n" + _("Masternode options:") + "\n";
     strUsage += "\n" + _("Darksend options:") + "\n";
     strUsage += "  -enabledarksend=<n>          " + _("Enable use of automated darksend for funds stored in this wallet (0-1, default: 0)") + "\n";
     strUsage += "  -darksendrounds=<n>          " + _("Use N separate masternodes to anonymize funds  (2-8, default: 2)") + "\n";
-    strUsage += "  -anonymizeaevoamount=<n> " + _("Keep N Aevo anonymized (default: 0)") + "\n";
+    strUsage += "  -anonymizeAevoamount=<n> " + _("Keep N Aevo anonymized (default: 0)") + "\n";
     strUsage += "  -liquidityprovider=<n>       " + _("Provide liquidity to Darksend by infrequently mixing coins on a continual basis (0-100, default: 0, 1=very frequent, high fees, 100=very infrequent, low fees)") + "\n";
 
     strUsage += "\n" + _("InstantX options:") + "\n";
@@ -1047,7 +1047,7 @@ bool AppInit2(boost::thread_group& threadGroup)
         nDarksendRounds = 99999;
     }
 
-    nAnonymizeAevoAmount = GetArg("-anonymizeaevoamount", 0);
+    nAnonymizeAevoAmount = GetArg("-anonymizeAevoamount", 0);
     if(nAnonymizeAevoAmount > 999999) nAnonymizeAevoAmount = 999999;
     if(nAnonymizeAevoAmount < 2) nAnonymizeAevoAmount = 2;
 
@@ -1070,8 +1070,8 @@ bool AppInit2(boost::thread_group& threadGroup)
        A note about convertability. Within Darksend pools, each denomination
        is convertable to another.
        For example:
-       1HM+1000 == (.1HM+100)*10
-       10HM+10000 == (1HM+1000)*10
+       1AVO+1000 == (.1AVO+100)*10
+       10AVO+10000 == (1AVO+1000)*10
     */
     darkSendDenominations.push_back( (1000        * COIN)+1000000 );
     darkSendDenominations.push_back( (100         * COIN)+100000 );

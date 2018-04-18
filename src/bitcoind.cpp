@@ -54,10 +54,10 @@ bool AppInit(int argc, char* argv[])
             // First part of help message is specific to bitcoind / RPC client
             std::string strUsage = _("Aevo version") + " " + FormatFullVersion() + "\n\n" +
                 _("Usage:") + "\n" +
-                  "  aevod [options]                     " + "\n" +
-                  "  aevod [options] <command> [params]  " + _("Send command to -server or aevod") + "\n" +
-                  "  aevod [options] help                " + _("List commands") + "\n" +
-                  "  aevod [options] help <command>      " + _("Get help for a command") + "\n";
+                  "  Aevod [options]                     " + "\n" +
+                  "  Aevod [options] <command> [params]  " + _("Send command to -server or Aevod") + "\n" +
+                  "  Aevod [options] help                " + _("List commands") + "\n" +
+                  "  Aevod [options] help <command>      " + _("Get help for a command") + "\n";
 
             strUsage += "\n" + HelpMessage();
 

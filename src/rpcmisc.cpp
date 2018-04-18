@@ -60,9 +60,9 @@ Value getinfo(const Array& params, bool fHelp)
     obj.push_back(Pair("proxy",         (proxy.first.IsValid() ? proxy.first.ToStringIPPort() : string())));
     obj.push_back(Pair("ip",            GetLocalAddress(NULL).ToStringIP()));
 
-    //diff.push_back(Pair("proof-of-work",  GetDifficulty()));
-    //diff.push_back(Pair("proof-of-stake", GetDifficulty(GetLastBlockIndex(pindexBest, true))));
-    obj.push_back(Pair("difficulty",    GetDifficulty(GetLastBlockIndex(pindexBest, true))));
+    diff.push_back(Pair("proof-of-work",  GetDifficulty()));
+    diff.push_back(Pair("proof-of-stake", GetDifficulty(GetLastBlockIndex(pindexBest, true))));
+	obj.push_back(Pair("difficulty", diff));
 
     obj.push_back(Pair("testnet",       TestNet()));
 #ifdef ENABLE_WALLET
@@ -116,7 +116,7 @@ public:
             obj.push_back(Pair("hex", HexStr(subscript.begin(), subscript.end())));
             Array a;
             BOOST_FOREACH(const CTxDestination& addr, addresses)
-                a.push_back(CAevoAddress(addr).ToString());
+                a.push_back(CAevocoinAddress(addr).ToString());
             obj.push_back(Pair("addresses", a));
             if (whichType == TX_MULTISIG)
                 obj.push_back(Pair("sigsrequired", nRequired));
@@ -139,7 +139,7 @@ Value validateaddress(const Array& params, bool fHelp)
             "validateaddress <Aevoaddress>\n"
             "Return information about <Aevoaddress>.");
 
-    CAevoAddress address(params[0].get_str());
+    CAevocoinAddress address(params[0].get_str());
     bool isValid = address.IsValid();
 
     Object ret;
@@ -178,7 +178,7 @@ Value validatepubkey(const Array& params, bool fHelp)
     bool isCompressed = pubKey.IsCompressed();
     CKeyID keyID = pubKey.GetID();
 
-    CAevoAddress address;
+    CAevocoinAddress address;
     address.Set(keyID);
 
     Object ret;
@@ -215,7 +215,7 @@ Value verifymessage(const Array& params, bool fHelp)
     string strSign     = params[1].get_str();
     string strMessage  = params[2].get_str();
 
-    CAevoAddress addr(strAddress);
+    CAevocoinAddress addr(strAddress);
     if (!addr.IsValid())
         throw JSONRPCError(RPC_TYPE_ERROR, "Invalid address");
 

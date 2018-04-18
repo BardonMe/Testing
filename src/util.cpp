@@ -1041,7 +1041,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "Aevo";
+    const char* pszModule = "Aevo Reborn";
 #endif
     if (pex)
         return strprintf(
@@ -1077,7 +1077,7 @@ boost::filesystem::path GetDefaultDataDir()
     // Unix: ~/.Aevo
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Aevo";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Aevo Reborn";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1089,7 +1089,7 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "Aevo";
+    return pathRet / "Aevo Reborn";
 #else
     // Unix
     return pathRet / ".Aevo";
@@ -1186,7 +1186,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "aevod.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "Aevod.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }

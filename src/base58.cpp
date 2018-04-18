@@ -226,11 +226,11 @@ int CBase58Data::CompareTo(const CBase58Data& b58) const {
 }
 
 namespace {
-    class CAevoAddressVisitor : public boost::static_visitor<bool> {
+    class CAevocoinAddressVisitor : public boost::static_visitor<bool> {
     private:
-        CAevoAddress *addr;
+        CAevocoinAddress *addr;
     public:
-        CAevoAddressVisitor(CAevoAddress *addrIn) : addr(addrIn) { }
+        CAevocoinAddressVisitor(CAevocoinAddress *addrIn) : addr(addrIn) { }
 
         bool operator()(const CKeyID &id) const { return addr->Set(id); }
         bool operator()(const CScriptID &id) const { return addr->Set(id); }
@@ -250,28 +250,28 @@ namespace {
     };
 };
 
-bool CAevoAddress::Set(const CKeyID &id) {
+bool CAevocoinAddress::Set(const CKeyID &id) {
     SetData(Params().Base58Prefix(CChainParams::PUBKEY_ADDRESS), &id, 20);
     return true;
 }
 
-bool CAevoAddress::Set(const CScriptID &id) {
+bool CAevocoinAddress::Set(const CScriptID &id) {
     SetData(Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS), &id, 20);
     return true;
 }
 
-bool CAevoAddress::Set(const CTxDestination &dest) {
-    return boost::apply_visitor(CAevoAddressVisitor(this), dest);
+bool CAevocoinAddress::Set(const CTxDestination &dest) {
+    return boost::apply_visitor(CAevocoinAddressVisitor(this), dest);
 }
 
-bool CAevoAddress::IsValid() const {
+bool CAevocoinAddress::IsValid() const {
     bool fCorrectSize = vchData.size() == 20;
     bool fKnownVersion = vchVersion == Params().Base58Prefix(CChainParams::PUBKEY_ADDRESS) ||
                          vchVersion == Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS);
     return fCorrectSize && fKnownVersion;
 }
 
-CTxDestination CAevoAddress::Get() const {
+CTxDestination CAevocoinAddress::Get() const {
     if (!IsValid())
         return CNoDestination();
     uint160 id;
@@ -284,7 +284,7 @@ CTxDestination CAevoAddress::Get() const {
         return CNoDestination();
 }
 
-bool CAevoAddress::GetKeyID(CKeyID &keyID) const {
+bool CAevocoinAddress::GetKeyID(CKeyID &keyID) const {
     if (!IsValid() || vchVersion != Params().Base58Prefix(CChainParams::PUBKEY_ADDRESS))
         return false;
     uint160 id;
@@ -293,34 +293,34 @@ bool CAevoAddress::GetKeyID(CKeyID &keyID) const {
     return true;
 }
 
-bool CAevoAddress::IsScript() const {
+bool CAevocoinAddress::IsScript() const {
     return IsValid() && vchVersion == Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS);
 }
 
-void CAevoSecret::SetKey(const CKey& vchSecret) {
+void CAevocoinSecret::SetKey(const CKey& vchSecret) {
     assert(vchSecret.IsValid());
     SetData(Params().Base58Prefix(CChainParams::SECRET_KEY), vchSecret.begin(), vchSecret.size());
     if (vchSecret.IsCompressed())
         vchData.push_back(1);
 }
 
-CKey CAevoSecret::GetKey() {
+CKey CAevocoinSecret::GetKey() {
     CKey ret;
     ret.Set(&vchData[0], &vchData[32], vchData.size() > 32 && vchData[32] == 1);
     return ret;
 }
 
-bool CAevoSecret::IsValid() const {
+bool CAevocoinSecret::IsValid() const {
     bool fExpectedFormat = vchData.size() == 32 || (vchData.size() == 33 && vchData[32] == 1);
     bool fCorrectVersion = vchVersion == Params().Base58Prefix(CChainParams::SECRET_KEY);
     return fExpectedFormat && fCorrectVersion;
 }
 
-bool CAevoSecret::SetString(const char* pszSecret) {
+bool CAevocoinSecret::SetString(const char* pszSecret) {
     return CBase58Data::SetString(pszSecret) && IsValid();
 }
 
-bool CAevoSecret::SetString(const std::string& strSecret) {
+bool CAevocoinSecret::SetString(const std::string& strSecret) {
     return SetString(strSecret.c_str());
 }
 
